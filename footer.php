@@ -12,7 +12,7 @@
       <div class="site-footer__col">
         <h3>ΕΡΓΑΣΙΑ 2</h3>
         <ul>
-          <li><a href="about.php">Σχετικά με μας</a></li>
+          <li><a href="aboutus.php">Σχετικά με μας</a></li>
         </ul>
       </div>
     </div>
