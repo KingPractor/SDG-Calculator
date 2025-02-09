@@ -226,7 +226,9 @@
       localStorage.setItem("finalScore", totalWeightedScore.toFixed(3));
       localStorage.setItem("indicatorScores", JSON.stringify(indicatorScores));
 	  
-	  console.log(JSON.stringify(wip_indicators)); //debug
+	  localStorage.setItem("wip_indicators", JSON.stringify(wip_indicators));
+	  
+	  //console.log(JSON.stringify(wip_indicators)); //debug
 
       window.location.href = "results.php";
     }
