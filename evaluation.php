@@ -28,45 +28,42 @@
   <?php include("footer.php"); ?>
   <script>
     const indicators = [
-      { id: "I1",  weight: 0.784, thresholdGroup: "group1", type: "normal" },
-      { id: "I2",  weight: 2.25,  thresholdGroup: "group1", type: "normal" },
-      { id: "I3",  weight: 0.58,  type: "division", divCondition: "greater" },
-      { id: "I4",  weight: 1.26,  thresholdGroup: "group1", type: "normal" },
-      { id: "I5",  weight: 0.663, thresholdGroup: "group1", type: "normal" },
-      { id: "I6",  weight: 0.337, thresholdGroup: "group1", type: "normal" },
-      { id: "I7",  weight: 0.701, thresholdGroup: "group1", type: "normal" },
-      { id: "I8",  weight: 0.299, type: "division", divCondition: "less" },
-      { id: "I9",  weight: 0.193, type: "division", divCondition: "less" },
-      { id: "I10", weight: 0.257, thresholdGroup: "group2", type: "normal" },
-      { id: "I11", weight: 0.663, thresholdGroup: "group2", type: "normal" },
-      { id: "I12", weight: 0.123, thresholdGroup: "group2", type: "normal" },
-      { id: "I13", weight: 0.552, type: "division", divCondition: "greater" },
-      { id: "I14", weight: 0.448, thresholdGroup: "group2", type: "normal" },
-      { id: "I15", weight: 0.58,  thresholdGroup: "group2", type: "normal" },
-      { id: "I16", weight: 0.264, thresholdGroup: "group2", type: "normal" },
-      { id: "I17", weight: 0.176, type: "division", divCondition: "greater" },
-      { id: "I18", weight: 1,     type: "division", divCondition: "less" },
-      { id: "I19", weight: 1,     thresholdGroup: "group2", type: "normal" },
-      { id: "I20", weight: 0,     thresholdGroup: "group1", type: "normal" },
-      { id: "I21", weight: 2,     thresholdGroup: "group2", type: "normal" },
-      { id: "I22", weight: 3,     thresholdGroup: "group2", type: "normal" },
-      { id: "I23", weight: 0.422, thresholdGroup: "group2", type: "normal" },
-      { id: "I24", weight: 0.266, type: "division", divCondition: "greater" },
-      { id: "I25", weight: 0.589, thresholdGroup: "group1", type: "normal" },
-      { id: "I26", weight: 0.411, thresholdGroup: "group2", type: "normal" },
-      { id: "I27", weight: 3,     thresholdGroup: "group2", type: "normal" },
-      { id: "I28", weight: 1,     thresholdGroup: "group2", type: "normal" },
-      { id: "I29", weight: 1,     thresholdGroup: "group2", type: "normal" },
-      { id: "I30", weight: 0.241, type: "division", divCondition: "less" },
-      { id: "I31", weight: 0.322, thresholdGroup: "group1", type: "normal" },
-      { id: "I32", weight: 0.18,  thresholdGroup: "group1", type: "normal" },
-      { id: "I33", weight: 0.114, thresholdGroup: "group2", type: "normal" },
-      { id: "I34", weight: 0.143, thresholdGroup: "group2", type: "normal" }
+      { id: "I1",  weight: 0.784, thresholdGroup: "group1", type: "normal"  , eval: "v1"},
+      { id: "I2",  weight: 2.25,  thresholdGroup: "group1", type: "normal"  , eval: "v1"},
+      { id: "I3",  weight: 0.58,  type: "division", divCondition: "greater" , eval: "null"},
+      { id: "I4",  weight: 1.26,  thresholdGroup: "group1", type: "normal"  , eval: "v1"},
+      { id: "I5",  weight: 0.663, thresholdGroup: "group1", type: "normal"  , eval: "v1"},
+      { id: "I6",  weight: 0.337, thresholdGroup: "group1", type: "normal"  , eval: "v1"},
+      { id: "I7",  weight: 0.701, thresholdGroup: "group1", type: "normal"  , eval: "v1"},
+      { id: "I8",  weight: 0.299, type: "division", divCondition: "less"    , eval: "null"},
+      { id: "I9",  weight: 0.193, type: "division", divCondition: "less"    , eval: "null"},
+      { id: "I10", weight: 0.257, thresholdGroup: "group2", type: "normal"  , eval: "v2"},
+      { id: "I11", weight: 0.663, thresholdGroup: "group2", type: "normal"  , eval: "v2"},
+      { id: "I12", weight: 0.123, thresholdGroup: "group2", type: "normal"  , eval: "v2"},
+      { id: "I13", weight: 0.552, type: "division", divCondition: "greater" , eval: "null"},
+      { id: "I14", weight: 0.448, thresholdGroup: "group2", type: "normal"  , eval: "v2"},
+      { id: "I15", weight: 0.58,  thresholdGroup: "group2", type: "normal"  , eval: "v2"},
+      { id: "I16", weight: 0.264, thresholdGroup: "group2", type: "normal"  , eval: "v2"},
+      { id: "I17", weight: 0.176, type: "division", divCondition: "greater" , eval: "null"},
+      { id: "I18", weight: 1,     type: "division", divCondition: "less"    , eval: "null"},
+      { id: "I19", weight: 1,     thresholdGroup: "group2", type: "normal"  , eval: "v2"},
+      { id: "I20", weight: 0,     thresholdGroup: "group1", type: "normal"  , eval: "v1"},
+      { id: "I21", weight: 2,     thresholdGroup: "group2", type: "normal"  , eval: "v2"},
+      { id: "I22", weight: 3,     thresholdGroup: "group2", type: "normal"  , eval: "v2"},
+      { id: "I23", weight: 0.422, thresholdGroup: "group2", type: "normal"  , eval: "v2"},
+      { id: "I24", weight: 0.266, type: "division", divCondition: "greater" , eval: "null"},
+      { id: "I25", weight: 0.589, thresholdGroup: "group1", type: "normal"  , eval: "v1"},
+      { id: "I26", weight: 0.411, thresholdGroup: "group2", type: "normal"  , eval: "v2"},
+      { id: "I27", weight: 3,     thresholdGroup: "group2", type: "normal"  , eval: "v2"},
+      { id: "I28", weight: 1,     thresholdGroup: "group2", type: "normal"  , eval: "v2"},
+      { id: "I29", weight: 1,     thresholdGroup: "group2", type: "normal"  , eval: "v2"},
+      { id: "I30", weight: 0.241, type: "division", divCondition: "less"    , eval: "null"},
+      { id: "I31", weight: 0.322, thresholdGroup: "group1", type: "normal"  , eval: "v1"},
+      { id: "I32", weight: 0.18,  thresholdGroup: "group1", type: "normal"  , eval: "v1"},
+      { id: "I33", weight: 0.114, thresholdGroup: "group2", type: "normal"  , eval: "v2"},
+      { id: "I34", weight: 0.143, thresholdGroup: "group2", type: "normal"  , eval: "v2"}
     ];
-    const yearOptions = [];
-    for (let y = 2000; y <= 2025; y++) {
-      yearOptions.push(String(y));
-    }
+	
     function createTable() {
       const tbody = document.querySelector('#indicatorsTable tbody');
       indicators.forEach(indicator => {
@@ -119,23 +116,6 @@
           });
           tdInput.appendChild(select3);
         } else if (indicator.type === 'division') {
-          //const refYearSelect = document.createElement('select');
-          //refYearSelect.id = indicator.id + '_ref_year';
-          //refYearSelect.required = true;
-          //const defaultOpt1 = document.createElement('option');
-          //defaultOpt1.value = "";
-          //defaultOpt1.textContent = "Year";
-          //defaultOpt1.disabled = true;
-          //defaultOpt1.selected = true;
-          //refYearSelect.appendChild(defaultOpt1);
-          //yearOptions.forEach(year => {
-          //  const opt = document.createElement('option');
-          //  opt.value = year;
-          //  opt.textContent = year;
-          //  refYearSelect.appendChild(opt);
-          //});
-          //tdInput.appendChild(refYearSelect);
-		  
 		  const text1 = document.createElement('label');
 		  text1.textContent = "Έτος Αναφοράς";
 		  tdInput.appendChild(text1);
@@ -159,23 +139,6 @@
           tdInput.appendChild(inputEval);
 		  
           tdInput.appendChild(document.createElement('br'));
-		  
-          //const evalYearSelect = document.createElement('select');
-          //evalYearSelect.id = indicator.id + '_eval_year';
-          //evalYearSelect.required = true;
-          //const defaultOpt2 = document.createElement('option');
-          //defaultOpt2.value = "";
-          //defaultOpt2.textContent = "Year";
-          //defaultOpt2.disabled = true;
-          //defaultOpt2.selected = true;
-          //evalYearSelect.appendChild(defaultOpt2);
-          //yearOptions.forEach(year => {
-          //  const opt = document.createElement('option');
-          //  opt.value = year;
-          //  opt.textContent = year;
-          //  evalYearSelect.appendChild(opt);
-          //});
-          //tdInput.appendChild(evalYearSelect);
 		  
 		  const text2 = document.createElement('label');
 		  text2.textContent = "Έτος Αξιολόγησης";
@@ -210,6 +173,7 @@
     function calculateEvaluation() {
       let totalWeightedScore = 0;
       let indicatorScores = [];
+	  let wip_indicators = [];
       indicators.forEach(indicator => {
         let score = 0, weightedValue = 0;
         if (indicator.type === 'normal') {
@@ -244,11 +208,26 @@
           }
           weightedValue = score * indicator.weight;
         }
+		
+		if((weightedValue < 2.25) && (indicator.eval === "v1"))
+		  {
+			  //MORE THINGS CAN BE DONE
+			  wip_indicators.push({ id: indicator.id});
+		  }
+		  if((weightedValue < 2) && (indicator.eval === "v2"))
+		  {
+			  //MORE THINGS CAN BE DONE
+			  wip_indicators.push({ id: indicator.id});
+		  }
+		
         totalWeightedScore += weightedValue;
         indicatorScores.push({ id: indicator.id, score: weightedValue });
       });
       localStorage.setItem("finalScore", totalWeightedScore.toFixed(3));
       localStorage.setItem("indicatorScores", JSON.stringify(indicatorScores));
+	  
+	  console.log(JSON.stringify(wip_indicators)); //debug
+
       window.location.href = "results.php";
     }
     window.onload = createTable;
