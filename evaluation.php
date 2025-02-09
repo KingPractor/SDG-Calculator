@@ -1,0 +1,212 @@
+<?php include("header.php"); ?>
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SDG Evaluation - Εισαγωγή Δεδομένων Αξιολόγησης</title>
+  <link rel="stylesheet" href="evaluation.css">
+</head>
+<body>
+  <main class="container">
+    <h1>Εισαγωγή Δεδομένων Αξιολόγησης</h1>
+    <p>Συμπληρώστε τις βαθμολογίες για κάθε δείκτη σύμφωνα με τους SDGs.</p>
+    <form id="evaluationForm">
+      <table id="indicatorsTable">
+        <thead>
+          <tr>
+            <th>Δείκτης</th>
+            <th>Βαθμολογία / Εισαγωγή</th>
+            <th>Βάρος (w<sub>i</sub>)</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <button type="button" onclick="calculateEvaluation()">Υπολογισμός Αξιολόγησης</button>
+    </form>
+  </main>
+  <?php include("footer.php"); ?>
+  <script>
+    const indicators = [
+      { id: "I1",  weight: 0.784, thresholdGroup: "group1", type: "normal" },
+      { id: "I2",  weight: 2.25,  thresholdGroup: "group1", type: "normal" },
+      { id: "I3",  weight: 0.58,  type: "division", divCondition: "greater" },
+      { id: "I4",  weight: 1.26,  thresholdGroup: "group1", type: "normal" },
+      { id: "I5",  weight: 0.663, thresholdGroup: "group1", type: "normal" },
+      { id: "I6",  weight: 0.337, thresholdGroup: "group1", type: "normal" },
+      { id: "I7",  weight: 0.701, thresholdGroup: "group1", type: "normal" },
+      { id: "I8",  weight: 0.299, type: "division", divCondition: "less" },
+      { id: "I9",  weight: 0.193, type: "division", divCondition: "less" },
+      { id: "I10", weight: 0.257, thresholdGroup: "group2", type: "normal" },
+      { id: "I11", weight: 0.663, thresholdGroup: "group2", type: "normal" },
+      { id: "I12", weight: 0.123, thresholdGroup: "group2", type: "normal" },
+      { id: "I13", weight: 0.552, type: "division", divCondition: "greater" },
+      { id: "I14", weight: 0.448, thresholdGroup: "group2", type: "normal" },
+      { id: "I15", weight: 0.58,  thresholdGroup: "group2", type: "normal" },
+      { id: "I16", weight: 0.264, thresholdGroup: "group2", type: "normal" },
+      { id: "I17", weight: 0.176, type: "division", divCondition: "greater" },
+      { id: "I18", weight: 1,     type: "division", divCondition: "less" },
+      { id: "I19", weight: 1,     thresholdGroup: "group2", type: "normal" },
+      { id: "I20", weight: 0,     thresholdGroup: "group1", type: "normal" },
+      { id: "I21", weight: 2,     thresholdGroup: "group2", type: "normal" },
+      { id: "I22", weight: 3,     thresholdGroup: "group2", type: "normal" },
+      { id: "I23", weight: 0.422, thresholdGroup: "group2", type: "normal" },
+      { id: "I24", weight: 0.266, type: "division", divCondition: "greater" },
+      { id: "I25", weight: 0.589, thresholdGroup: "group1", type: "normal" },
+      { id: "I26", weight: 0.411, thresholdGroup: "group2", type: "normal" },
+      { id: "I27", weight: 3,     thresholdGroup: "group2", type: "normal" },
+      { id: "I28", weight: 1,     thresholdGroup: "group2", type: "normal" },
+      { id: "I29", weight: 1,     thresholdGroup: "group2", type: "normal" },
+      { id: "I30", weight: 0.241, type: "division", divCondition: "less" },
+      { id: "I31", weight: 0.322, thresholdGroup: "group1", type: "normal" },
+      { id: "I32", weight: 0.18,  thresholdGroup: "group1", type: "normal" },
+      { id: "I33", weight: 0.114, thresholdGroup: "group2", type: "normal" },
+      { id: "I34", weight: 0.143, thresholdGroup: "group2", type: "normal" }
+    ];
+    const yearOptions = [];
+    for (let y = 2000; y <= 2025; y++) {
+      yearOptions.push(String(y));
+    }
+    function createTable() {
+      const tbody = document.querySelector('#indicatorsTable tbody');
+      indicators.forEach(indicator => {
+        const tr = document.createElement('tr');
+        const tdId = document.createElement('td');
+        tdId.textContent = indicator.id;
+        tr.appendChild(tdId);
+        const tdInput = document.createElement('td');
+        if (indicator.type === 'normal') {
+          let opts1, opts2, opts3;
+          if (indicator.thresholdGroup === "group1") {
+            opts1 = ["0", "0.25", "1"];
+            opts2 = ["0", "1"];
+            opts3 = ["0", "1"];
+          } else {
+            opts1 = ["0", "1"];
+            opts2 = ["0", "1"];
+            opts3 = ["0", "1"];
+          }
+          const select1 = document.createElement('select');
+          select1.id = indicator.id + '_score_1';
+          select1.required = true;
+          opts1.forEach(val => {
+            const opt = document.createElement('option');
+            opt.value = val;
+            opt.textContent = val;
+            select1.appendChild(opt);
+          });
+          tdInput.appendChild(select1);
+          tdInput.appendChild(document.createTextNode(" "));
+          const select2 = document.createElement('select');
+          select2.id = indicator.id + '_score_2';
+          select2.required = true;
+          opts2.forEach(val => {
+            const opt = document.createElement('option');
+            opt.value = val;
+            opt.textContent = val;
+            select2.appendChild(opt);
+          });
+          tdInput.appendChild(select2);
+          tdInput.appendChild(document.createTextNode(" "));
+          const select3 = document.createElement('select');
+          select3.id = indicator.id + '_score_3';
+          select3.required = true;
+          opts3.forEach(val => {
+            const opt = document.createElement('option');
+            opt.value = val;
+            opt.textContent = val;
+            select3.appendChild(opt);
+          });
+          tdInput.appendChild(select3);
+        } else if (indicator.type === 'division') {
+          const refYearSelect = document.createElement('select');
+          refYearSelect.id = indicator.id + '_ref_year';
+          refYearSelect.required = true;
+          const defaultOpt1 = document.createElement('option');
+          defaultOpt1.value = "";
+          defaultOpt1.textContent = "Year";
+          defaultOpt1.disabled = true;
+          defaultOpt1.selected = true;
+          refYearSelect.appendChild(defaultOpt1);
+          yearOptions.forEach(year => {
+            const opt = document.createElement('option');
+            opt.value = year;
+            opt.textContent = year;
+            refYearSelect.appendChild(opt);
+          });
+          tdInput.appendChild(refYearSelect);
+          const inputRef = document.createElement('input');
+          inputRef.type = 'number';
+          inputRef.step = 'any';
+          inputRef.id = indicator.id + '_ref_value';
+          inputRef.placeholder = 'Τιμή';
+          inputRef.required = true;
+          tdInput.appendChild(inputRef);
+          tdInput.appendChild(document.createElement('br'));
+          const evalYearSelect = document.createElement('select');
+          evalYearSelect.id = indicator.id + '_eval_year';
+          evalYearSelect.required = true;
+          const defaultOpt2 = document.createElement('option');
+          defaultOpt2.value = "";
+          defaultOpt2.textContent = "Year";
+          defaultOpt2.disabled = true;
+          defaultOpt2.selected = true;
+          evalYearSelect.appendChild(defaultOpt2);
+          yearOptions.forEach(year => {
+            const opt = document.createElement('option');
+            opt.value = year;
+            opt.textContent = year;
+            evalYearSelect.appendChild(opt);
+          });
+          tdInput.appendChild(evalYearSelect);
+          const inputEval = document.createElement('input');
+          inputEval.type = 'number';
+          inputEval.step = 'any';
+          inputEval.id = indicator.id + '_eval_value';
+          inputEval.placeholder = 'Τιμή';
+          inputEval.required = true;
+          tdInput.appendChild(inputEval);
+        }
+        tr.appendChild(tdInput);
+        const tdWeight = document.createElement('td');
+        tdWeight.textContent = indicator.weight;
+        tr.appendChild(tdWeight);
+        tbody.appendChild(tr);
+      });
+    }
+    function calculateEvaluation() {
+      let totalWeightedScore = 0;
+      let indicatorScores = [];
+      indicators.forEach(indicator => {
+        let score = 0, weightedValue = 0;
+        if (indicator.type === 'normal') {
+          const s1 = parseFloat(document.getElementById(indicator.id + '_score_1').value) || 0;
+          const s2 = parseFloat(document.getElementById(indicator.id + '_score_2').value) || 0;
+          const s3 = parseFloat(document.getElementById(indicator.id + '_score_3').value) || 0;
+          score = s1 + s2 + s3;
+          weightedValue = score * indicator.weight;
+        } else if (indicator.type === 'division') {
+          const refVal = parseFloat(document.getElementById(indicator.id + '_ref_value').value) || 0;
+          const evalVal = parseFloat(document.getElementById(indicator.id + '_eval_value').value) || 0;
+          let percentChange = 0;
+          if (refVal !== 0) {
+            percentChange = (evalVal - refVal) / refVal;
+          }
+          if (indicator.divCondition === "greater") {
+            score = (refVal === 0 || percentChange > 1 || percentChange === 0) ? 0 : 1 / percentChange;
+          } else if (indicator.divCondition === "less") {
+            score = (refVal === 0 || percentChange < 1) ? 0 : evalVal;
+          }
+          weightedValue = score * indicator.weight;
+        }
+        totalWeightedScore += weightedValue;
+        indicatorScores.push({ id: indicator.id, score: weightedValue });
+      });
+      localStorage.setItem("finalScore", totalWeightedScore.toFixed(3));
+      localStorage.setItem("indicatorScores", JSON.stringify(indicatorScores));
+      window.location.href = "results.php";
+    }
+    window.onload = createTable;
+  </script>
+</body>
+</html>
