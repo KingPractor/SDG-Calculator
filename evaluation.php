@@ -119,53 +119,86 @@
           });
           tdInput.appendChild(select3);
         } else if (indicator.type === 'division') {
-          const refYearSelect = document.createElement('select');
-          refYearSelect.id = indicator.id + '_ref_year';
-          refYearSelect.required = true;
-          const defaultOpt1 = document.createElement('option');
-          defaultOpt1.value = "";
-          defaultOpt1.textContent = "Year";
-          defaultOpt1.disabled = true;
-          defaultOpt1.selected = true;
-          refYearSelect.appendChild(defaultOpt1);
-          yearOptions.forEach(year => {
-            const opt = document.createElement('option');
-            opt.value = year;
-            opt.textContent = year;
-            refYearSelect.appendChild(opt);
-          });
-          tdInput.appendChild(refYearSelect);
+          //const refYearSelect = document.createElement('select');
+          //refYearSelect.id = indicator.id + '_ref_year';
+          //refYearSelect.required = true;
+          //const defaultOpt1 = document.createElement('option');
+          //defaultOpt1.value = "";
+          //defaultOpt1.textContent = "Year";
+          //defaultOpt1.disabled = true;
+          //defaultOpt1.selected = true;
+          //refYearSelect.appendChild(defaultOpt1);
+          //yearOptions.forEach(year => {
+          //  const opt = document.createElement('option');
+          //  opt.value = year;
+          //  opt.textContent = year;
+          //  refYearSelect.appendChild(opt);
+          //});
+          //tdInput.appendChild(refYearSelect);
+		  
+		  const text1 = document.createElement('label');
+		  text1.textContent = "Έτος Αναφοράς";
+		  tdInput.appendChild(text1);
+		  
+		  tdInput.appendChild(document.createElement('br'));
+		  
           const inputRef = document.createElement('input');
           inputRef.type = 'number';
           inputRef.step = 'any';
           inputRef.id = indicator.id + '_ref_value';
-          inputRef.placeholder = 'Τιμή';
+          inputRef.placeholder = 'X1A';
           inputRef.required = true;
           tdInput.appendChild(inputRef);
-          tdInput.appendChild(document.createElement('br'));
-          const evalYearSelect = document.createElement('select');
-          evalYearSelect.id = indicator.id + '_eval_year';
-          evalYearSelect.required = true;
-          const defaultOpt2 = document.createElement('option');
-          defaultOpt2.value = "";
-          defaultOpt2.textContent = "Year";
-          defaultOpt2.disabled = true;
-          defaultOpt2.selected = true;
-          evalYearSelect.appendChild(defaultOpt2);
-          yearOptions.forEach(year => {
-            const opt = document.createElement('option');
-            opt.value = year;
-            opt.textContent = year;
-            evalYearSelect.appendChild(opt);
-          });
-          tdInput.appendChild(evalYearSelect);
-          const inputEval = document.createElement('input');
+		  
+		  const inputEval = document.createElement('input');
           inputEval.type = 'number';
           inputEval.step = 'any';
           inputEval.id = indicator.id + '_eval_value';
-          inputEval.placeholder = 'Τιμή';
+          inputEval.placeholder = 'X1B';
           inputEval.required = true;
           tdInput.appendChild(inputEval);
+		  
+          tdInput.appendChild(document.createElement('br'));
+		  
+          //const evalYearSelect = document.createElement('select');
+          //evalYearSelect.id = indicator.id + '_eval_year';
+          //evalYearSelect.required = true;
+          //const defaultOpt2 = document.createElement('option');
+          //defaultOpt2.value = "";
+          //defaultOpt2.textContent = "Year";
+          //defaultOpt2.disabled = true;
+          //defaultOpt2.selected = true;
+          //evalYearSelect.appendChild(defaultOpt2);
+          //yearOptions.forEach(year => {
+          //  const opt = document.createElement('option');
+          //  opt.value = year;
+          //  opt.textContent = year;
+          //  evalYearSelect.appendChild(opt);
+          //});
+          //tdInput.appendChild(evalYearSelect);
+		  
+		  const text2 = document.createElement('label');
+		  text2.textContent = "Έτος Αξιολόγησης";
+		  tdInput.appendChild(text2);
+		  
+		  tdInput.appendChild(document.createElement('br'));
+		  
+		  const inputRef2 = document.createElement('input');
+          inputRef2.type = 'number';
+          inputRef2.step = 'any';
+          inputRef2.id = indicator.id + '_ref_value2';
+          inputRef2.placeholder = 'X2A';
+          inputRef2.required = true;
+          tdInput.appendChild(inputRef2);
+          
+		  const inputEval2 = document.createElement('input');
+          inputEval2.type = 'number';
+          inputEval2.step = 'any';
+          inputEval2.id = indicator.id + '_eval_value2';
+          inputEval2.placeholder = 'X2B';
+          inputEval2.required = true;
+          tdInput.appendChild(inputEval2);
+		  
         }
         tr.appendChild(tdInput);
         const tdWeight = document.createElement('td');
@@ -188,14 +221,26 @@
         } else if (indicator.type === 'division') {
           const refVal = parseFloat(document.getElementById(indicator.id + '_ref_value').value) || 0;
           const evalVal = parseFloat(document.getElementById(indicator.id + '_eval_value').value) || 0;
+		  const refVal2 = parseFloat(document.getElementById(indicator.id + '_ref_value2').value) || 0;
+          const evalVal2 = parseFloat(document.getElementById(indicator.id + '_eval_value2').value) || 0;
           let percentChange = 0;
-          if (refVal !== 0) {
-            percentChange = (evalVal - refVal) / refVal;
+		  let refTotal = 0;
+		  let evalTotal = 0;
+		  
+		  if (refVal2 !== 0) {
+			refTotal = (refVal / refVal2);
+		  }
+		  if (evalVal2 !== 0) {
+			evalTotal = (evalVal / evalVal2);
+		  }
+		  
+          if (refTotal !== 0) {
+            percentChange = (evalTotal - refTotal) / refTotal;
           }
           if (indicator.divCondition === "greater") {
-            score = (refVal === 0 || percentChange > 1 || percentChange === 0) ? 0 : 1 / percentChange;
+            score = (refTotal === 0 || percentChange > 1 || percentChange === 0) ? 0 : 1 / percentChange;
           } else if (indicator.divCondition === "less") {
-            score = (refVal === 0 || percentChange < 1) ? 0 : evalVal;
+            score = (refTotal === 0 || percentChange < 1) ? 0 : evalTotal;
           }
           weightedValue = score * indicator.weight;
         }
